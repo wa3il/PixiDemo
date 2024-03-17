@@ -1,5 +1,4 @@
-export function addBackground(app)
-{
+export function addBackground(app) {
     // Create a background sprite.
     const background = PIXI.Sprite.from('background');
 
@@ -10,13 +9,10 @@ export function addBackground(app)
      * If the preview is landscape, fill the width of the screen
      * and apply horizontal scale to the vertical scale for a uniform fit.
      */
-    if (app.screen.width > app.screen.height)
-    {
+    if (app.screen.width > app.screen.height) {
         background.width = app.screen.width * 1.2;
         background.scale.y = background.scale.x;
-    }
-    else
-    {
+    } else {
         /**
          * If the preview is square or portrait, then fill the height of the screen instead
          * and apply the scaling to the horizontal scale accordingly.
