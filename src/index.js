@@ -1,5 +1,6 @@
 import { addBackground } from './game/background.js';
 import { addspacecrafts, animateSpacecrafts } from './game/spacecraft.js';
+import { addscore } from './game/score.js';
 
 // Create a new PIXI application
 const app = new PIXI.Application();
@@ -10,32 +11,12 @@ const spacecrafts = [];
 let score = { value: 0 };
 let timeCounter = 0;
 
-let scoreText; // Declare scoreText globally
-
 async function setup() {
     // Initialize the application.
     await app.init({ background: '#1099bb', resizeTo: window });
 
     // Then adding the application's canvas to the DOM body.
     document.body.appendChild(app.canvas);
-
-    // Add the background first
-    addBackground(app);
-
-    // Create a PIXI text object for the score
-    scoreText = new PIXI.Text('Score: 0', {
-        fill: '#ffffff', // Color of the text
-        fontSize: 24,    // Size of the text
-        fontFamily: 'Arial', // Font family
-        fontWeight: 'bold'   // Font weight
-    });
-
-    // Position the text
-    scoreText.x = 10;
-    scoreText.y = 10;
-
-    // Add the score text to the stage AFTER the background
-    app.stage.addChild(scoreText);
 }
 
 async function preload() {
@@ -54,9 +35,8 @@ async function preload() {
     await setup();
     await preload();
 
-    const score = { value: 0 }; // Object to hold score as a reference
-
     addBackground(app);
+    addscore(app);
     addspacecrafts(app, spacecrafts, score, updateScoreText); // Pass updateScoreText function
     app.ticker.add((time) => {
         animateSpacecrafts(spacecrafts, 2, app, time, timeCounter);
