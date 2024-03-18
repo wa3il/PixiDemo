@@ -33,7 +33,7 @@ export function addspacecrafts(app, spacecrafts, scoreRef, updateScoreText) {
             event.preventDefault(); // Prevent default click behavior
             spacecraftContainer.removeChild(spacecraft); // Remove the spacecraft
             scoreRef.value += 10; // Add points (assuming scoreRef is an object with a value property)
-            updateScoreText(); // Update score text
+            updateScoreText();
         });
 
         // Add the spacecraft sprite to the spacecraft container.

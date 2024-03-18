@@ -1,6 +1,7 @@
+export let scoreText; // Declare scoreText globally
+
 export function addscore(app)
 {
-    let scoreText; // Declare scoreText globally
     
     // Create a PIXI text object for the score
     scoreText = new PIXI.Text('Score: 0', {

@@ -1,6 +1,6 @@
 import { addBackground } from './game/background.js';
 import { addspacecrafts, animateSpacecrafts } from './game/spacecraft.js';
-import { addscore } from './game/score.js';
+import { addscore, scoreText } from './game/score.js';
 
 // Create a new PIXI application
 const app = new PIXI.Application();
@@ -30,6 +30,10 @@ async function preload() {
     await PIXI.Assets.load(assets);
 }
 
+export function updateScoreText() {
+    scoreText.text = `Score: ${score.value}`;
+}
+
 // Asynchronous IIFE
 (async () => {
     await setup();
@@ -43,10 +47,6 @@ async function preload() {
         timeCounter += time.deltaTime;
     });
 })();
-
-export function updateScoreText() {
-    scoreText.text = `Score: ${score.value}`;
-}
 
 /* // Asynchronous IIFE
 (async () => {
