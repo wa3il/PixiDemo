@@ -47,23 +47,30 @@ export function addspacecrafts(app, spacecrafts, scoreRef,spacecraftCount) {
     }
 }
 export function updatelevel(spacecrafts,level,score,app,spacecraftsCount){
-    console.log(spacecrafts)
-        if (spacecrafts.length == 0 && level < 3){
-            level.value ++;
-            console.log(level)
-            addspacecrafts(app, spacecrafts, score,spacecraftsCount); // Pass updateScoreText function    
+    console.log(level.value)
+        if (spacecrafts.length == 0 && level.value < 3 && level.value > 0){
+            
+            level.value += 1;   
+            addspacecrafts(app, spacecrafts, score,spacecraftsCount); // 
+            
         }
-        else if (level ==3){
-
+        else if (spacecrafts.length == 0 && level.value == 3 ){
+            level.value += 1;
+        }
+        else if (spacecrafts.length == 0 && level.value >= 4){
+            level.value = 0;
+            score.value = 0;
+           console.log("THE END");
         }
 }
 
 
 export function animateSpacecrafts(spacecrafts, level, app, time, timeCounter) {
-    if (level === 1) {
+    
+    if (level.value === 1) {
         // Level 1: The spacecrafts do not move.
         return;
-    } else if (level === 2) {
+    } else if (level.value === 2) {
         // Level 2: The spacecrafts move from left to right.
         spacecrafts.forEach((spacecraft) => {
             spacecraft.x += spacecraft.speed * spacecraft.direction;
@@ -72,37 +79,15 @@ export function animateSpacecrafts(spacecrafts, level, app, time, timeCounter) {
                 spacecraft.direction *= -1; // Reverse direction
             }
         });
-    } else if (level === 3) {
-        // Level 3: The spacecrafts move randomly within the screen boundaries.
-        spacecrafts.forEach((spacecraft) => {
-            // Check if the spacecraft has a valid direction vector, if not, create one.
-            if (!spacecraft.direction) {
-                spacecraft.direction = new PIXI.Point(
-                    Math.random() - 0.5,
-                    Math.random() - 0.5
-                );
-                spacecraft.direction.normalize();
-            }
+    } else if (level.value === 3) {
+         // Level 2: The spacecrafts move from left to right.
+         spacecrafts.forEach((spacecraft) => {
+            spacecraft.x += spacecraft.speed * spacecraft.direction;
+            spacecraft.y += spacecraft.speed * spacecraft.direction;
 
-            // Define a turn speed for rotation
-            spacecraft.turnSpeed = 0.1;
-
-            // Update spacecraft position
-            spacecraft.x += spacecraft.speed * spacecraft.direction.x;
-            spacecraft.y += spacecraft.speed * spacecraft.direction.y;
-            spacecraft.rotation += spacecraft.turnSpeed;
-
-            // Check if the spacecraft is out of bounds and reposition it.
-            if (spacecraft.x < 0 || spacecraft.x > app.screen.width ||
-                spacecraft.y < 0 || spacecraft.y > app.screen.height) {
-                spacecraft.x = Math.random() * app.screen.width;
-                spacecraft.y = Math.random() * app.screen.height;
-                // Recalculate direction
-                spacecraft.direction = new PIXI.Point(
-                    Math.random() - 0.5,
-                    Math.random() - 0.5
-                );
-                spacecraft.direction.normalize();
+            // Check if spacecraft is out of bounds
+            if ((spacecraft.x < 0 || spacecraft.x > app.screen.width) || (spacecraft.y < -10 || spacecraft.y > app.screen.length)){
+                spacecraft.direction *= -1; // Reverse direction
             }
         });
     }

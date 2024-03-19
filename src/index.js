@@ -9,9 +9,9 @@ const app = new PIXI.Application();
 
 // Create an array to store the objects to destroy
 let spacecrafts = [];
-let spacecraftCount = 4;
+let spacecraftCount = 1;
 
-let level = { value: 1 };
+let level = { value: 0 };
 let score = { value: 0 };
 let timeCounter = 0;
 
@@ -52,18 +52,23 @@ export function updateScoreText() {
 // Fonction pour démarrer le jeu
 function startGame() {
     // Ajoutez le reste du code pour lancer le jeu ici
+    level.value ++;
     addspacecrafts(app, spacecrafts, score,spacecraftCount); // Pass updateScoreText function
+    spacecrafts.forEach((spacecraft) => {
+        spacecraft.speed = 0;
+    });
     app.ticker.add((time) => {
-        updateScoreText();
-        level = updatelevel(spacecrafts,level,score,app,spacecraftCount)
-        if (spacecrafts.length > 0){  
+        updateScoreText(); 
+        updatelevel(spacecrafts,level,score,app,spacecraftCount)
+        if (spacecrafts.length > 0){
             animateSpacecrafts(spacecrafts, level, app, time, timeCounter);
+        }
+        if( spacecrafts.length == 0 && level.value == 4){
+            timeCounter = 0;
+            initMenu(app,startGame);
         }
         timeCounter += time.deltaTime;
     });
 }
-
-// Événement pour démarrer le jeu lorsqu'on appuie sur le bouton "Start"
-document.getElementById('startButton').addEventListener('click', startGame);
 
 
