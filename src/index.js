@@ -1,6 +1,8 @@
 import { addBackground } from './game/background.js';
 import { addspacecrafts, animateSpacecrafts } from './game/spacecraft.js';
 import { addscore, scoreText } from './game/score.js';
+import { initMenu } from './game/menu.js';
+
 
 // Create a new PIXI application
 const app = new PIXI.Application();
@@ -34,19 +36,31 @@ export function updateScoreText() {
     scoreText.text = `Score: ${score.value}`;
 }
 
+
+
 // Asynchronous IIFE
 (async () => {
     await setup();
     await preload();
-
     addBackground(app);
+    initMenu(app,startGame);
     addscore(app);
+})();
+
+// Fonction pour démarrer le jeu
+function startGame() {
+    // Ajoutez le reste du code pour lancer le jeu ici
     addspacecrafts(app, spacecrafts, score, updateScoreText); // Pass updateScoreText function
     app.ticker.add((time) => {
         animateSpacecrafts(spacecrafts, 2, app, time, timeCounter);
         timeCounter += time.deltaTime;
     });
-})();
+}
+
+// Événement pour démarrer le jeu lorsqu'on appuie sur le bouton "Start"
+document.getElementById('startButton').addEventListener('click', startGame);
+
+
 
 /* // Asynchronous IIFE
 (async () => {
