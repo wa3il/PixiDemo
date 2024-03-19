@@ -1,11 +1,11 @@
-export function addspacecrafts(app, spacecrafts, scoreRef) {
+export function addspacecrafts(app, spacecrafts, scoreRef,spacecraftCount) {
     // Create a container to hold all the spacecraft sprites.
     const spacecraftContainer = new PIXI.Container();
 
     // Add the spacecraft container to the stage.
     app.stage.addChild(spacecraftContainer);
 
-    let spacecraftCount = 4;
+   
 
     // Create a spacecraft sprite for each spacecraft.
     for (let i = 0; i < spacecraftCount; i++) {
@@ -26,6 +26,12 @@ export function addspacecrafts(app, spacecrafts, scoreRef) {
         // Randomly scale the spacecraft sprite to create some variety.
         spacecraft.scale.set(0.5 + Math.random() * 0.5);
 
+         // Add the spacecraft sprite to the spacecraft container.
+         spacecraftContainer.addChild(spacecraft);
+
+         // Add the spacecraft sprite to the spacecraft array.
+         spacecrafts.push(spacecraft);
+ 
         // Destruction of spacecraft
         spacecraft.interactive = true;
         spacecraft.buttonMode = true;
@@ -37,20 +43,15 @@ export function addspacecrafts(app, spacecrafts, scoreRef) {
             console.log(spacecrafts)
         });
 
-        // Add the spacecraft sprite to the spacecraft container.
-        spacecraftContainer.addChild(spacecraft);
-
-        // Add the spacecraft sprite to the spacecraft array.
-        spacecrafts.push(spacecraft);
-
+       
     }
 }
-export function updatelevel(spacecrafts,level,score,app){
+export function updatelevel(spacecrafts,level,score,app,spacecraftsCount){
     console.log(spacecrafts)
-        if (spacecrafts == 0 && level < 3){
-            level ++;
-
-            addspacecrafts(app, spacecrafts, score); // Pass updateScoreText function
+        if (spacecrafts.length == 0 && level < 3){
+            level.value ++;
+            console.log(level)
+            addspacecrafts(app, spacecrafts, score,spacecraftsCount); // Pass updateScoreText function    
         }
         else if (level ==3){
 

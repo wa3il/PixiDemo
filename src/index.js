@@ -8,8 +8,10 @@ import { initMenu } from './game/menu.js';
 const app = new PIXI.Application();
 
 // Create an array to store the objects to destroy
-const spacecrafts = [];
+let spacecrafts = [];
+let spacecraftCount = 4;
 
+let level = { value: 1 };
 let score = { value: 0 };
 let timeCounter = 0;
 
@@ -49,14 +51,14 @@ export function updateScoreText() {
 
 // Fonction pour démarrer le jeu
 function startGame() {
-    let level = 1;
     // Ajoutez le reste du code pour lancer le jeu ici
-    addspacecrafts(app, spacecrafts, score); // Pass updateScoreText function
+    addspacecrafts(app, spacecrafts, score,spacecraftCount); // Pass updateScoreText function
     app.ticker.add((time) => {
-        animateSpacecrafts(spacecrafts, level, app, time, timeCounter);
         updateScoreText();
-        updatelevel(spacecrafts.length,level,score,app)
-        
+        level = updatelevel(spacecrafts,level,score,app,spacecraftCount)
+        if (spacecrafts.length > 0){  
+            animateSpacecrafts(spacecrafts, level, app, time, timeCounter);
+        }
         timeCounter += time.deltaTime;
     });
 }
