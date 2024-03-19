@@ -1,11 +1,11 @@
-export function addspacecrafts(app, spacecrafts, scoreRef, updateScoreText) {
+export function addspacecrafts(app, spacecrafts, scoreRef) {
     // Create a container to hold all the spacecraft sprites.
     const spacecraftContainer = new PIXI.Container();
 
     // Add the spacecraft container to the stage.
     app.stage.addChild(spacecraftContainer);
 
-    const spacecraftCount = 20;
+    let spacecraftCount = 4;
 
     // Create a spacecraft sprite for each spacecraft.
     for (let i = 0; i < spacecraftCount; i++) {
@@ -33,7 +33,8 @@ export function addspacecrafts(app, spacecrafts, scoreRef, updateScoreText) {
             event.preventDefault(); // Prevent default click behavior
             spacecraftContainer.removeChild(spacecraft); // Remove the spacecraft
             scoreRef.value += 10; // Add points (assuming scoreRef is an object with a value property)
-            updateScoreText();
+            spacecrafts.pop(spacecraft)
+            console.log(spacecrafts)
         });
 
         // Add the spacecraft sprite to the spacecraft container.
@@ -41,8 +42,21 @@ export function addspacecrafts(app, spacecrafts, scoreRef, updateScoreText) {
 
         // Add the spacecraft sprite to the spacecraft array.
         spacecrafts.push(spacecraft);
+
     }
 }
+export function updatelevel(spacecrafts,level,score,app){
+    console.log(spacecrafts)
+        if (spacecrafts == 0 && level < 3){
+            level ++;
+
+            addspacecrafts(app, spacecrafts, score); // Pass updateScoreText function
+        }
+        else if (level ==3){
+
+        }
+}
+
 
 export function animateSpacecrafts(spacecrafts, level, app, time, timeCounter) {
     if (level === 1) {
