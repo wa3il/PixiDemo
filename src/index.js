@@ -9,7 +9,7 @@ const app = new PIXI.Application();
 
 // Create an array to store the objects to destroy
 let spacecrafts = [];
-let spacecraftCount = 1;
+let spacecraftCount = 10;
 
 let level = { value: 0 };
 let score = { value: 0 };
